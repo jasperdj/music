@@ -533,42 +533,30 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Sample music files
-            const musicFiles = [
-                'Absolution_Relax_Chill_Atmospheric_30_120bpm_Nrmlzd2_VBR5 (1).mp3',
-                'Absolution_Relax_Chill_Atmospheric_30_120bpm_Nrmlzd2_VBR5.mp3',
-                'Afterthought_Sleep_DeepSleep_Atmospheric_60_120bpm_Nrmlzd2_VBR5.mp3',
-                'AlchemyofHappiness_Focus_DeepWork_Atmospheric_30_120bpm_HighNEL_Nrmlzd2_VBR5.mp3',
-                'Astral Bodies Simple Unguided Meditation 10 Chris RSF2 1_30mins_VBR5.mp3',
-                'Atma Simple Unguided Meditation 4 Chris RSR1 1_30mins_VBR5.mp3',
-                'BeneaththeRose_Sleep_DeepSleep_Atmospheric_60_120bpm_Nrmlzd2_VBR5.mp3',
-                'CallToRest_Sleep_PowerNap_Atmospheric_60_120bpm_HighNEL_Nrmlzd2_VBR5.mp3',
-                'ChorusSpace_Sleep_PowerNap_Atmospheric_60_120bpm_LowNEL_Nrmlzd2_VBR5.mp3',
-                'Cloudscape_Focus_Learning_Atmospheric_30_118BPM_HighNEL_Nrmlzd2_VBR5.mp3',
-                'Dark Moon_Sleep_DeepSleep_Atmospheric_60_120bpm_Nrmlzd2_VBR5.mp3',
-                'Dreamscape_Sleep_DeepSleep_Atmospheric_60_120bpm_Nrmlzd2_VBR5.mp3',
-                'Equinox_Focus_DeepWork_Acoustic_30_120bpm_Nrmlzd2_VBR5.mp3',
-                'Eysas_Focus_Learning_Piano_30_86bpm_Nrmlzd2_VBR5.mp3',
-                'GenerativeWaves_Sleep_Powernap_Atmospheric_15_120bpm_HighNEL_Nrmlzd2_VBR5.mp3',
-                'Hidden Respite_Sleep_Deep Sleep_Atmospheric_60_120bpm_Nrmlzd2_VBR5.mp3',
-                'IdeasAreBrewing_Focus_Creativity_Atmospheric_30_133BPM_HighNEL_Nrmlzd2_VBR5.mp3',
-                'Juniper_Focus_Learning_Piano_30_106bpm_Nrmlzd2_VBR5.mp3',
-                'Keranga_Focus_Learning_Piano_30_106bpm_Nrmlzd2_VBR5.mp3',
-                'LivingProof_Focus_DeepWork_Classical_30_117bpm_HighNEL_Nrmlzd2_VBR5.mp3',
-                'Multiverse_Focus_DeepWork_Atmospheric_30_120bpm_HighNEL_Nrmlzd2_expanded_VBR5.mp3',
-                'NaturalMeasures_Focus_DeepWork_Classical_120_HighNEL_Nrmlzd2_VBR5.mp3',
-                'NorthernPoints_Relax_Chill_Atmospheric_15_120bpm_Nrmlzd2_VBR5.mp3',
-                'Prairie Winds Acoustic Focus Study Conor 96bpm_1.4_Nrmlzd2_VBR5.mp3',
-                'Provincial_Focus_DeepWork_Piano_30_120bpm_HighNEL_Nrmlzd2_VBR5.mp3',
-                'SafeTravels_Focus_DeepWork_Acoustic_30_100bpm_HighNEL_Nrmlzd2_VBR5.mp3',
-                'Seamstress_Focus_DeepWork_Classical_100_HighNEL_Nrmlzd2_VBR5.mp3',
-                'SunnySide_Focus_Learning_Acoustic_30_95bpm_HighNEL_Nrmlzd2_VBR5.mp3',
-                'Swimmingly_Focus_DeepWork_Atmospheric_30_100BPM_HighNEL_Nrmlzd2_VBR5.mp3',
-                'Untraced_Focus_DeepWork_Piano_30_108bpm_HighNEL_Nrmlzd2_VBR5.mp3',
-                'WindTrioNo.1_Focus_Creativity_Classical_30_100bpm_HighNEL_Nrmlzd2_VBR5.mp3',
-                'Windbent_Focus_DeepWork_Piano_100_HighNEL_Nrmlzd2_VBR5.mp3',
-                'WinterMovements_Focus_Creativity_Atmospheric_30_102BPM_Nrmlzd2_HighNEL_Nrmlzd2_VBR5.mp3'
-            ];
+            // Fetch music files from JSON list
+            let musicFiles = [];
+            
+            // Fetch the music list from music-list.json
+            fetch('music-list.json')
+                .then(response => response.json())
+                .then(data => {
+                    musicFiles = data.files;
+                    // Initialize player after getting the music list
+                    initializePlayer();
+                })
+                .catch(error => {
+                    console.error('Error loading music list:', error);
+                    // Fallback to sample music files if the JSON fails to load
+                    musicFiles = [
+                        'Absolution_Relax_Chill_Atmospheric_30_120bpm_Nrmlzd2_VBR5.mp3',
+                        'Afterthought_Sleep_DeepSleep_Atmospheric_60_120bpm_Nrmlzd2_VBR5.mp3',
+                        // rest of your sample files
+                    ];
+                    initializePlayer();
+                });
+            
+            // All player code is moved into this function
+            function initializePlayer() {
             
             // DOM elements
             const audioPlayer = document.getElementById('audio-player');
@@ -1321,6 +1309,7 @@
             
             // Initialize
             processTracks();
+        }
         });
     </script>
 </body>
